@@ -119,7 +119,7 @@ export const gift = {
   imageAlt: 'Amazon Pay gift card: a golden sunset over a palm-lined beach with the words Happy Birthday, Shrishti',
   redeemUrl: 'https://www.amazon.in/gc/redeem',
   /** Shown instead of a code when Amazon delivers the card to her email directly. */
-  deliveryNote: 'The card is in your email. Go check.',
+  deliveryNote: 'The card is in your Whatsapp. Go check.',
 }
 
 /**
