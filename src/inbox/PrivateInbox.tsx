@@ -17,11 +17,13 @@ export default function PrivateInbox() {
   const [session, setSession] = useState<Session | null>(null)
   const [access, setAccess] = useState<Access>('checking')
   const [unconfigured] = useState(() => getSupabase() === null)
+  const [loadFailed, setLoadFailed] = useState(false)
 
   useEffect(() => {
     const pending = getSupabase()
     if (!pending) return
     let unsubscribe = () => {}
+    pending.catch(() => setLoadFailed(true))
     pending.then((client) => {
       setSupabase(client)
       client.auth.getSession().then(({ data }) => {
@@ -33,7 +35,7 @@ export default function PrivateInbox() {
         if (!next) setAccess('signed-out')
       })
       unsubscribe = () => data.subscription.unsubscribe()
-    })
+    }, () => { /* handled by the catch above */ })
     return () => unsubscribe()
   }, [])
 
@@ -47,6 +49,7 @@ export default function PrivateInbox() {
   }, [supabase, session])
 
   if (unconfigured) return <InboxShell><p>Supabase is not configured for this build. Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code>.</p></InboxShell>
+  if (loadFailed) return <InboxShell><p role="alert">The inbox could not load. Check your connection and refresh the page.</p></InboxShell>
   if (!supabase || access === 'checking') return <InboxShell><p>Checking who is here…</p></InboxShell>
   if (access === 'signed-out' || !session) return <InboxShell><SignIn supabase={supabase} /></InboxShell>
   if (access === 'denied') return <InboxShell>
