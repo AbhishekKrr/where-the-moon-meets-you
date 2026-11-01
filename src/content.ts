@@ -46,7 +46,7 @@ export const discoveries: Discovery[] = [
     id: 'wishing-tree',
     name: 'Wishing Tree',
     hint: 'Top right. The tree.',
-    message: 'Good photo, so it gets its own tree.',
+    message: 'Your fake candids, though no less beautiful.',
     x: '84%',
     y: '38%',
     photoId: 'memory-3',
@@ -55,7 +55,7 @@ export const discoveries: Discovery[] = [
     id: 'secret-path',
     name: 'Secret Path',
     hint: 'Somewhere in the middle. Follow the fireflies.',
-    message: 'Evidence that you’ve been bossing me around for a while now. I’m not complaining.',
+    message: 'Your Mischiefs, sweet mischiefs.',
     x: '43%',
     y: '42%',
     photoId: 'memory-5',
@@ -89,7 +89,7 @@ export const memories: Memory[] = [
   { id: 'memory-3', src: '/images/memories/memory-3.jpg', alt: 'Shrishti looking away among purple and white flowers', caption: 'you, ignoring the camera completely' },
   { id: 'memory-4', src: '/images/memories/memory-4.jpg', alt: 'Shrishti laughing beside Abhishek at a hilltop viewpoint', caption: 'no idea what was funny. you probably remember' },
   { id: 'memory-5', src: '/images/memories/memory-5.jpg', alt: 'Shrishti playfully presenting Abhishek beneath a white stone archway', caption: 'presenting: me. apparently very impressive', focus: 'center 82%' },
-  { id: 'memory-6', src: '/images/memories/memory-6.jpg', alt: 'Shrishti pointing out the valley view while Abhishek looks on', caption: 'explaining the view like you built it' },
+  { id: 'memory-6', src: '/images/memories/memory-6.jpg', alt: 'Shrishti pointing out the valley view while Abhishek looks on', caption: 'That "kudd jaao" moment' },
 ]
 
 // PROVISIONAL letter. Gentle appreciation, one light affectionate line, no confession.
