@@ -1,0 +1,25 @@
+.inbox, .inbox-loading { width: min(760px, 100%); min-height: 100vh; margin: 0 auto; padding: 32px 16px 64px; color: var(--ink); }
+.inbox-loading { color: #cfc6dc; }
+.inbox-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.inbox-header h1 { margin: 0; font-family: var(--serif); font-size: 36px; font-weight: 500; }
+.inbox-header div { display: flex; align-items: center; gap: 12px; }
+.inbox-email { color: #b8adc7; font-size: 12px; }
+.inbox-panel { padding: 22px; border: 1px solid #ead0a844; border-radius: 16px; background: #10152d; color: #ddd3e3; font-size: 14px; line-height: 1.6; }
+.inbox-signin { display: grid; gap: 8px; }
+.inbox-signin label { color: #f0dcc0; font-size: 12px; }
+.inbox-signin .soft-button { justify-self: start; margin-top: 6px; }
+.inbox-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
+.inbox-tabs [role='tab'] { min-height: 40px; padding: 8px 14px; border: 1px solid #d8c3a555; border-radius: 20px; background: transparent; color: #f8e8d3; cursor: pointer; }
+.inbox-tabs [role='tab'][aria-selected='true'] { border-color: #edc98d; background: #eac68b22; }
+.inbox-tabs b { margin-left: 6px; color: #efc888; font-weight: 500; }
+.inbox-empty { color: #b8adc7; }
+.inbox-list { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
+.inbox-message { padding: 18px; border: 1px solid #ead0a833; border-left: 3px solid #b8adc755; border-radius: 12px; background: #10152d; }
+.inbox-message.status-new { border-left-color: #f0d39f; }
+.inbox-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; font-size: 12px; color: #b8adc7; }
+.inbox-meta strong { color: #f8e8d3; font-size: 14px; }
+.status-badge { padding: 1px 8px; border: 1px solid #b8adc755; border-radius: 10px; }
+.status-new .status-badge { border-color: #f0d39f; color: #f0d39f; }
+.inbox-text { margin: 10px 0 14px; color: #efe6ee; font-size: 15px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.inbox-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.inbox-actions .ghost-button { min-height: 38px; padding: 7px 14px; font-size: 12px; }

@@ -1,0 +1,89 @@
+/* Palette: midnight blue, peach/rose sunset, soft gold, lavender (§6.3). */
+:root {
+  --midnight: #080b20;
+  --ink: #fff5ec;
+  --gold: #f0d39f;
+  --gold-strong: #f3d7a7;
+  --muted: #d1cee0;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --hand: Caveat, 'Segoe Script', cursive;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--midnight);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: var(--midnight); }
+button, input, textarea { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+[tabindex='-1']:focus { outline: none; }
+
+/* Shared controls */
+.soft-button, .ghost-button {
+  min-height: 44px; padding: 11px 18px; border-radius: 30px; color: #fff0d8; font-size: 13px; letter-spacing: .04em; cursor: pointer;
+  transition: background .25s ease, border-color .25s ease, transform .25s ease;
+}
+.soft-button { border: 1px solid #e6be83aa; background: #eac68b26; }
+.ghost-button { border: 1px solid #d8c3a555; background: #15152b88; }
+.soft-button:hover, .ghost-button:hover { border-color: #edc98d; background: #eac68b38; }
+.soft-button:disabled, .ghost-button:disabled { cursor: wait; opacity: .6; }
+.soft-button:focus-visible, .ghost-button:focus-visible, .link-button:focus-visible, .journey-button:focus-visible,
+.music-toggle:focus-visible, .polaroid:focus-visible, .wax-seal:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--gold-strong); outline-offset: 3px;
+}
+.ghost-button.danger { border-color: #e8a0a080; color: #ffd9d4; }
+.link-button {
+  min-height: 36px; padding: 6px 4px; border: 0; background: transparent; color: #f2d8ae; font-size: 12px;
+  text-decoration: underline; text-decoration-color: #f2d8ae66; text-underline-offset: 4px; cursor: pointer;
+}
+.link-button:hover { color: #ffe6bd; text-decoration-color: currentColor; }
+.link-button.quiet { color: #c9bfd6; }
+
+.signature { margin: 0; color: #f6d39a; font-family: var(--hand); font-size: 34px; line-height: 1; }
+
+/* Music toggle: always reachable after the opening (FR-004). */
+.music-toggle {
+  position: fixed; z-index: 30; top: max(12px, env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right));
+  display: flex; align-items: center; gap: 6px; min-width: 44px; min-height: 44px; padding: 8px 13px;
+  border: 1px solid #ead0a855; border-radius: 22px; background: #10152dbb; color: #f8e8d3; font-size: 11px; cursor: pointer; backdrop-filter: blur(8px);
+}
+.music-toggle span:first-child { color: #c9bfd6; font-size: 15px; }
+.music-toggle.on span:first-child { color: #f6d697; }
+@media (max-width: 480px) { .music-toggle-text { display: none; } }
+
+/* Discreet notices (FR-005). */
+.notice-region { position: fixed; z-index: 60; top: max(64px, calc(env(safe-area-inset-top) + 56px)); left: 50%; width: min(420px, calc(100% - 32px)); transform: translateX(-50%); pointer-events: none; }
+.notice { display: flex; align-items: center; gap: 8px; margin: 0; padding: 10px 6px 10px 16px; border: 1px solid #ead0a855; border-radius: 14px; background: #10152df0; color: #efe4dc; font-size: 12px; line-height: 1.5; box-shadow: 0 12px 30px #05061766; pointer-events: auto; animation: appear .35s ease both; }
+.notice span { flex: 1; }
+.notice button { width: 36px; height: 36px; flex: none; border: 0; background: transparent; color: #e9d8cb; font-size: 20px; cursor: pointer; }
+
+/* Dialogs */
+.modal-backdrop { position: fixed; z-index: 50; inset: 0; display: grid; place-items: center; padding: 16px; background: #05061799; backdrop-filter: blur(4px); animation: appear .25s ease both; }
+.confirm-dialog { width: min(360px, 100%); padding: 24px; border: 1px solid #ecd1ac83; border-radius: 18px; background: linear-gradient(145deg, #27203b, #151a38); color: #f6e9da; text-align: center; box-shadow: 0 16px 45px #05061777; }
+.confirm-dialog h2 { margin: 0; font-family: var(--serif); font-size: 26px; font-weight: 500; }
+.confirm-dialog p { margin: 10px 0 20px; color: #d8cfdc; font-size: 13px; line-height: 1.6; }
+.confirm-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+.form-error { margin: 8px 0; color: #ffc9b8; font-size: 12px; line-height: 1.5; }
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* FR-007: reduce nonessential motion without blocking navigation. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
