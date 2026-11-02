@@ -1,9 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { AudioProvider } from './audio/AudioProvider'
-import { useAudio, type Track } from './audio/audioContext'
+import { useEffect, useRef, useState } from 'react'
 import { ConfirmDialog } from './components/ConfirmDialog'
-import { MusicToggle } from './components/MusicToggle'
-import { Notice } from './components/Notice'
 import type { DiscoveryId } from './content'
 import { addDiscovery } from './lib/progress'
 import { emptyJourney, loadJourney, saveJourney, type JourneyState } from './lib/storage'
@@ -24,12 +20,6 @@ type Scene = 'opening' | 'revealing' | 'birthday' | 'garden-transition' | 'garde
 
 const openingScenes: Scene[] = ['opening', 'revealing', 'birthday', 'garden-transition']
 
-const trackFor = (scene: Scene): Track => {
-  if (scene === 'sunset' || scene === 'letter') return 'sunset'
-  if (scene === 'finale' || scene === 'gift' || scene === 'keepsake') return 'finale'
-  return 'ambience'
-}
-
 type JourneyProps = {
   journey: JourneyState
   update: (change: (state: JourneyState) => JourneyState) => void
@@ -40,16 +30,13 @@ function Journey({ journey, update }: JourneyProps) {
   const [letterFromReturn, setLetterFromReturn] = useState(false)
   const [confirmReset, setConfirmReset] = useState(false)
   const timer = useRef<number | undefined>(undefined)
-  const audio = useAudio()
   // Remember whether this visit began as a return, so the welcome-back links don't vanish mid-visit.
   const [returning] = useState(() => journey.letterOpened || journey.journeyCompleted)
 
   useEffect(() => () => window.clearTimeout(timer.current), [])
 
-  /** Scene changes happen inside tap handlers, so the music can follow along (FR-052). */
   const goTo = (next: Scene) => {
     window.clearTimeout(timer.current)
-    audio.setTrack(trackFor(next))
     setScene(next)
   }
 
@@ -57,12 +44,7 @@ function Journey({ journey, update }: JourneyProps) {
     timer.current = window.setTimeout(() => setScene(next), prefersReducedMotion() ? Math.min(ms, 300) : ms)
   }
 
-  const enterWorld = () => {
-    if (journey.music === null) return
-    goTo('revealing')
-    if (journey.music === 'on') audio.start()
-    after(1500, 'birthday')
-  }
+  const enterWorld = () => { goTo('revealing'); after(1500, 'birthday') }
 
   const beginJourney = () => { goTo('garden-transition'); after(1100, 'garden') }
 
@@ -71,7 +53,7 @@ function Journey({ journey, update }: JourneyProps) {
   const reset = () => {
     setConfirmReset(false)
     setLetterFromReturn(false)
-    update((state) => ({ ...emptyJourney, music: state.music }))
+    update(() => emptyJourney)
     goTo('opening')
   }
 
@@ -79,7 +61,7 @@ function Journey({ journey, update }: JourneyProps) {
     {openingScenes.includes(scene) && <>
       <div className="stars" aria-hidden="true" /><div className="moon" aria-hidden="true" /><div className="horizon" aria-hidden="true" />
       <section className="opening">
-        {scene === 'opening' && <OpeningScene musicChoice={journey.music} onMusicChoice={(music) => update((state) => ({ ...state, music }))} onEnter={enterWorld} returning={returning} onReadLetter={openLetterDirectly} onKeepsake={() => goTo('keepsake')} onRestart={() => setConfirmReset(true)} />}
+        {scene === 'opening' && <OpeningScene onEnter={enterWorld} returning={returning} onReadLetter={openLetterDirectly} onKeepsake={() => goTo('keepsake')} onRestart={() => setConfirmReset(true)} />}
         {scene === 'revealing' && <div className="birthday-reveal" aria-live="polite"><p className="eyebrow">ONE SECOND…</p><div className="reveal-star" aria-hidden="true">✧</div></div>}
         {scene === 'birthday' && <BirthdayReveal onBegin={beginJourney} />}
         {scene === 'garden-transition' && <div className="garden-passage" aria-live="polite"><span aria-hidden="true">☾</span><p>This way…</p></div>}
@@ -108,7 +90,6 @@ function Journey({ journey, update }: JourneyProps) {
       onOpenGift={() => goTo('gift')}
       onReplayEnding={() => goTo('finale')}
       onRestart={() => setConfirmReset(true)} />}
-    {scene !== 'opening' && <MusicToggle />}
     {confirmReset && <ConfirmDialog
       title="Start the journey again?"
       body="This clears what you’ve found so far on this device. The letter and card will still be there at the end."
@@ -120,15 +101,10 @@ function Journey({ journey, update }: JourneyProps) {
 
 function App() {
   const [journey, setJourney] = useState<JourneyState>(loadJourney)
-  const [notice, setNotice] = useState<string | null>(null)
-  const dismissNotice = useCallback(() => setNotice(null), [])
 
   useEffect(() => { saveJourney(journey) }, [journey])
 
-  return <AudioProvider enabled={journey.music === 'on'} onEnabledChange={(on) => setJourney((state) => ({ ...state, music: on ? 'on' : 'off' }))} onNotice={setNotice}>
-    <Journey journey={journey} update={setJourney} />
-    <Notice message={notice} onDismiss={dismissNotice} />
-  </AudioProvider>
+  return <Journey journey={journey} update={setJourney} />
 }
 
 export default App

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { useAudio } from '../audio/audioContext'
 import { audioPaths } from '../content'
 
 type Status = 'ask' | 'loading' | 'playing' | 'paused' | 'ended' | 'unavailable' | 'skipped'
@@ -8,24 +7,15 @@ type Status = 'ask' | 'loading' | 'playing' | 'paused' | 'ended' | 'unavailable'
 export function VoiceNotePrompt({ onDone }: { onDone: () => void }) {
   const [status, setStatus] = useState<Status>('ask')
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const { duck: duckMusic } = useAudio()
-  // The audio controls change identity when music is toggled; keep the latest without restarting effects.
-  const duckRef = useRef(duckMusic)
-  useEffect(() => { duckRef.current = duckMusic })
-  const duck = (on: boolean) => duckRef.current(on)
-
-  useEffect(() => () => {
-    audioRef.current?.pause()
-    duckRef.current(false)
-  }, [])
+  useEffect(() => () => audioRef.current?.pause(), [])
 
   const voice = () => {
     if (!audioRef.current) {
       const audio = new Audio(audioPaths.voiceNote)
-      audio.addEventListener('ended', () => { setStatus('ended'); duck(false) })
+      audio.addEventListener('ended', () => setStatus('ended'))
       audio.addEventListener('pause', () => setStatus((current) => current === 'playing' ? 'paused' : current))
       audio.addEventListener('playing', () => setStatus('playing'))
-      audio.addEventListener('error', () => { setStatus('unavailable'); duck(false) })
+      audio.addEventListener('error', () => setStatus('unavailable'))
       audioRef.current = audio
     }
     return audioRef.current
@@ -35,11 +25,10 @@ export function VoiceNotePrompt({ onDone }: { onDone: () => void }) {
     const audio = voice()
     if (fromStart) audio.currentTime = 0
     setStatus('loading')
-    duck(true)
-    audio.play().catch(() => { setStatus('unavailable'); duck(false) })
+    audio.play().catch(() => setStatus('unavailable'))
   }
 
-  const pause = () => { audioRef.current?.pause(); duck(false) }
+  const pause = () => audioRef.current?.pause()
 
   if (status === 'skipped') return null
 

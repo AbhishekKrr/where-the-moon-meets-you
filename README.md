@@ -18,7 +18,7 @@ npm run build    # must pass before deploying (FR-059)
 | --- | --- |
 | All words: greeting, discovery messages, captions, **letter (provisional)**, wish | `src/content.ts` |
 | Photos (`memory-1.jpg` … `memory-6.jpg`) | `public/images/memories/` |
-| Music + voice note | `public/audio/` (see README.txt there for names) |
+| Voice note (no background music) | `public/audio/voice-note/voice-note.m4a` |
 | Scenes / components | `src/scenes/`, `src/components/` |
 | Keepsake card drawing (PNG + animated video) | `src/card/` |
 | Owner inbox (`/private-inbox`) | `src/inbox/` |
@@ -62,7 +62,7 @@ After the voice note, a gift box opens to reveal a gift card (`src/scenes/GiftSc
 
 - [ ] Read and approve the letter, captions, and discovery messages in `src/content.ts`
 - [ ] Real photos added (only ones you're comfortable sharing by link) and alt text updated
-- [ ] Music/voice files added (licensed or your own), or accept silence
+- [ ] Voice note plays on the live site (Listen, Pause, Replay)
 - [ ] `npm run build` passes
 - [ ] Full journey tested on the **deployed URL** on a phone and a desktop
 - [ ] Card downloads (portrait, landscape, animated) open correctly

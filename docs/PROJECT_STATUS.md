@@ -2,6 +2,13 @@
 
 **As of:** 28 October 2026 · **Target release:** 3 November 2026 · **Baseline:** SRS v1.0
 
+> **Changes since this snapshot (1–2 November 2026):**
+> - **Background music removed** at Abhishek's request. There is no music question, no music toggle and no audio code; the door opens with one tap. FR-003–FR-005 and FR-052 are intentionally dropped. Sections below that mention music describe the earlier version.
+> - **Voice note added** (`public/audio/voice-note/voice-note.m4a`, 1 min 33 s) and tested.
+> - **Real photos** added and captions/letter rewritten in a plainer voice.
+> - **Gift card scene** added after the voice note (code comes from `VITE_GIFT_CARD_CODE`).
+> - **Supabase set up and tested**; site deployed to Netlify from GitHub (`AbhishekKrr/where-the-moon-meets-you`).
+
 This document records what was built against the SRS, how it was verified, what is still pending, and what to do before the birthday link is sent. It is written for Abhishek (project owner) and for anyone (a developer, Codex, a reviewer) picking up the code next.
 
 ---

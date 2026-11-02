@@ -63,13 +63,13 @@ describe('journey storage (FR-019)', () => {
     return store
   }
 
-  it('round-trips progress but asks about music afresh each visit', () => {
+  it('round-trips progress', () => {
     stubStorage()
-    saveJourney({ ...emptyJourney, discovered: ['moonflower'], music: 'on', letterOpened: true })
+    saveJourney({ ...emptyJourney, discovered: ['moonflower'], letterOpened: true, giftOpened: true })
     const loaded = loadJourney()
     expect(loaded.discovered).toEqual(['moonflower'])
     expect(loaded.letterOpened).toBe(true)
-    expect(loaded.music).toBeNull()
+    expect(loaded.giftOpened).toBe(true)
   })
 
   it('falls back to a fresh journey when storage is blocked or corrupt', () => {

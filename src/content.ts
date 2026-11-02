@@ -130,9 +130,6 @@ export const gift = {
 export const giftCode = ((import.meta.env.VITE_GIFT_CARD_CODE as string | undefined) ?? '').trim()
 
 export const audioPaths = {
-  ambience: '/audio/music/celestial-ambience.mp3',
-  sunset: '/audio/music/sunset-piano.mp3',
-  finale: '/audio/music/finale.mp3',
   voiceNote: '/audio/voice-note/voice-note.m4a',
 } as const
 

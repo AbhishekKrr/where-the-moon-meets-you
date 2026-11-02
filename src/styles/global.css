@@ -34,7 +34,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .soft-button:hover, .ghost-button:hover { border-color: #edc98d; background: #eac68b38; }
 .soft-button:disabled, .ghost-button:disabled { cursor: wait; opacity: .6; }
 .soft-button:focus-visible, .ghost-button:focus-visible, .link-button:focus-visible, .journey-button:focus-visible,
-.music-toggle:focus-visible, .polaroid:focus-visible, .wax-seal:focus-visible, input:focus-visible, textarea:focus-visible {
+.polaroid:focus-visible, .wax-seal:focus-visible, input:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--gold-strong); outline-offset: 3px;
 }
 .ghost-button.danger { border-color: #e8a0a080; color: #ffd9d4; }
@@ -46,22 +46,6 @@ button { -webkit-tap-highlight-color: transparent; }
 .link-button.quiet { color: #c9bfd6; }
 
 .signature { margin: 0; color: #f6d39a; font-family: var(--hand); font-size: 34px; line-height: 1; }
-
-/* Music toggle: always reachable after the opening (FR-004). */
-.music-toggle {
-  position: fixed; z-index: 30; top: max(12px, env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right));
-  display: flex; align-items: center; gap: 6px; min-width: 44px; min-height: 44px; padding: 8px 13px;
-  border: 1px solid #ead0a855; border-radius: 22px; background: #10152dbb; color: #f8e8d3; font-size: 11px; cursor: pointer; backdrop-filter: blur(8px);
-}
-.music-toggle span:first-child { color: #c9bfd6; font-size: 15px; }
-.music-toggle.on span:first-child { color: #f6d697; }
-@media (max-width: 480px) { .music-toggle-text { display: none; } }
-
-/* Discreet notices (FR-005). */
-.notice-region { position: fixed; z-index: 60; top: max(64px, calc(env(safe-area-inset-top) + 56px)); left: 50%; width: min(420px, calc(100% - 32px)); transform: translateX(-50%); pointer-events: none; }
-.notice { display: flex; align-items: center; gap: 8px; margin: 0; padding: 10px 6px 10px 16px; border: 1px solid #ead0a855; border-radius: 14px; background: #10152df0; color: #efe4dc; font-size: 12px; line-height: 1.5; box-shadow: 0 12px 30px #05061766; pointer-events: auto; animation: appear .35s ease both; }
-.notice span { flex: 1; }
-.notice button { width: 36px; height: 36px; flex: none; border: 0; background: transparent; color: #e9d8cb; font-size: 20px; cursor: pointer; }
 
 /* Dialogs */
 .modal-backdrop { position: fixed; z-index: 50; inset: 0; display: grid; place-items: center; padding: 16px; background: #05061799; backdrop-filter: blur(4px); animation: appear .25s ease both; }

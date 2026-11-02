@@ -4,11 +4,8 @@ import { sanitizeDiscovered } from './progress'
 // Bump the version if the shape changes so old saves are ignored rather than misread.
 const STORAGE_KEY = 'where-the-moon-meets-you:journey:v1'
 
-export type MusicPreference = 'on' | 'off'
-
 export type JourneyState = {
   discovered: DiscoveryId[]
-  music: MusicPreference | null
   letterOpened: boolean
   journeyCompleted: boolean
   keepsakeDownloaded: boolean
@@ -17,7 +14,6 @@ export type JourneyState = {
 
 export const emptyJourney: JourneyState = {
   discovered: [],
-  music: null,
   letterOpened: false,
   journeyCompleted: false,
   keepsakeDownloaded: false,
@@ -32,8 +28,6 @@ export function loadJourney(): JourneyState {
     const saved = JSON.parse(raw) as Partial<Record<keyof JourneyState, unknown>>
     return {
       discovered: sanitizeDiscovered(saved.discovered),
-      // Music is asked afresh on every visit, so nothing ever plays before a new explicit choice (FR-003).
-      music: null,
       letterOpened: saved.letterOpened === true,
       journeyCompleted: saved.journeyCompleted === true,
       keepsakeDownloaded: saved.keepsakeDownloaded === true,
