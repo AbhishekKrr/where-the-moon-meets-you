@@ -133,7 +133,7 @@ export const audioPaths = {
   ambience: '/audio/music/celestial-ambience.mp3',
   sunset: '/audio/music/sunset-piano.mp3',
   finale: '/audio/music/finale.mp3',
-  voiceNote: '/audio/voice-note/voice-note.mp3',
+  voiceNote: '/audio/voice-note/voice-note.m4a',
 } as const
 
 /** The custom constellation: a crescent resting on a curved sunset horizon. Points sit in a 100 × 100 box. */
